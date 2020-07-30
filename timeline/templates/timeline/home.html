@@ -8,10 +8,10 @@
 		      <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
 		      <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
 		    </div>
+		    <h2><a class="article-title" href="{% url 'post-detail' post.id%}">{{ post.content }}</a></h2>
 		    <div class="media">
 		    	<img class="img-fluid" alt="Responsive image" src="{{ post.image.url }}">
 		    </div>
-		    <p class="article-content"><a href="{% url 'post-detail' post.id%}">{{ post.content }}</a></p>
 		  </div>
 		</article>
 	{% endfor %}
