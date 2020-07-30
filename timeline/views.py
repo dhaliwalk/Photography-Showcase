@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post
 from django.contrib.auth.models import User
-
+from django.db.models import Count
 
 # def home(request):
 # 	context = {
@@ -12,12 +12,16 @@ from django.contrib.auth.models import User
 # 	}
 # 	return render(request, 'timeline/home.html', context)
 
+def leaderboard(request):
+	user_posts = User.objects.annotate(total_posts = Count('post')).order_by('-total_posts')
+	return render(request, 'timeline/leaderboard.html', {'user_posts': user_posts})
+
 class PostListView(ListView):
 	model = Post
 	template_name = 'timeline/home.html'
 	context_object_name = 'posts'
 	ordering = ['-date_posted']
-	paginate_by = 5
+	paginate_by = 10
 
 class UserPostListView(ListView):
 	model = Post
